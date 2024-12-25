@@ -1,38 +1,42 @@
 /***********************************************************
-* Developer: Minhas Kamal (minhaskamal024@gmail.com)       *
-* Website: https://github.com/MinhasKamal/DownGit          *
-* License: MIT License                                     *
-***********************************************************/
+ * Developer: Minhas Kamal (minhaskamal024@gmail.com)       *
+ * Website: https://github.com/MinhasKamal/DownGit          *
+ * License: MIT License                                     *
+ ***********************************************************/
 
-var homeModule = angular.module('homeModule', [
-    'ngRoute',
-    'downGitModule',
-]);
+var homeModule = angular.module("homeModule", ["ngRoute", "downGitModule"]);
 
 homeModule.config([
-    '$routeProvider',
+    "$routeProvider",
 
     function ($routeProvider) {
-        $routeProvider
-            .when('/home', {
-                templateUrl: 'app/home/home.html',
-                controller: [
-                '$scope',
-                '$routeParams',
-                '$location',
-                'toastr',
-                'downGitService',
+        $routeProvider.when("/home", {
+            templateUrl: "app/home/home.html",
+            controller: [
+                "$scope",
+                "$routeParams",
+                "$location",
+                "toastr",
+                "downGitService",
 
-                function($scope, $routeParams, $location, toastr, downGitService) {
+                function (
+                    $scope,
+                    $routeParams,
+                    $location,
+                    toastr,
+                    downGitService
+                ) {
                     $scope.downUrl = "";
                     $scope.url = "";
-                    $scope.isProcessing = {val: false};
-                    $scope.downloadedFiles = {val: 0};
-                    $scope.totalFiles = {val: 0};
+                    $scope.isProcessing = { val: false };
+                    $scope.downloadedFiles = { val: 0 };
+                    $scope.totalFiles = { val: 0 };
 
                     var templateUrl = "https?://github.com/.+/.+";
                     var downloadUrlInfix = "#/home?url=";
-                    var downloadUrlPrefix = "https://minhaskamal.github.io/DownGit/"+downloadUrlInfix;
+                    var downloadUrlPrefix =
+                        "https://eilleswan.github.io/DownGit/" +
+                        downloadUrlInfix;
 
                     if ($routeParams.url) {
                         $scope.url = $routeParams.url;
@@ -42,27 +46,32 @@ homeModule.config([
                         var parameter = {
                             url: $routeParams.url,
                             fileName: $routeParams.fileName,
-                            rootDirectory: $routeParams.rootDirectory
+                            rootDirectory: $routeParams.rootDirectory,
                         };
                         var progress = {
                             isProcessing: $scope.isProcessing,
                             downloadedFiles: $scope.downloadedFiles,
-                            totalFiles: $scope.totalFiles
+                            totalFiles: $scope.totalFiles,
                         };
-                        downGitService.downloadZippedFiles(parameter, progress, toastr);
-
+                        downGitService.downloadZippedFiles(
+                            parameter,
+                            progress,
+                            toastr
+                        );
                     } else if ($scope.url != "") {
-                        toastr.warning("Invalid URL!", {iconClass: 'toast-down'});
+                        toastr.warning("URL存在错误", {
+                            iconClass: "toast-down",
+                        });
                     }
 
-                    $scope.catchEnter = function(keyEvent) {
+                    $scope.catchEnter = function (keyEvent) {
                         if (keyEvent.which == 13) {
                             $scope.download();
                         }
                     };
 
-                    $scope.createDownLink = function() {
-                        $scope.downUrl="";
+                    $scope.createDownLink = function () {
+                        $scope.downUrl = "";
 
                         if (!$scope.url) {
                             return;
@@ -71,15 +80,17 @@ homeModule.config([
                         if ($scope.url.match(templateUrl)) {
                             $scope.downUrl = downloadUrlPrefix + $scope.url;
                         } else {
-                            toastr.warning("Invalid URL!", {iconClass: 'toast-down'});
+                            toastr.warning("URL 存在错误", {
+                                iconClass: "toast-down",
+                            });
                         }
                     };
 
-                    $scope.download = function() {
-                        window.location = downloadUrlInfix+$scope.url;
+                    $scope.download = function () {
+                        window.location = downloadUrlInfix + $scope.url;
                     };
-
-                }],
-            });
-    }
+                },
+            ],
+        });
+    },
 ]);

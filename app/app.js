@@ -1,38 +1,34 @@
 /***********************************************************
-* Developer: Minhas Kamal (minhaskamal024@gmail.com)       *
-* Website: https://github.com/MinhasKamal/DownGit          *
-* License: MIT License                                     *
-***********************************************************/
+ * Developer: Minhas Kamal (minhaskamal024@gmail.com)       *
+ * Website: https://github.com/MinhasKamal/DownGit          *
+ * License: MIT License                                     *
+ ***********************************************************/
 
 var siteHeaderText = {};
 
-var downGit = angular.module('downGit', [
-    'ngRoute',
-    'homeModule',
-    'toastr',
-]);
+var downGit = angular.module("downGit", ["ngRoute", "homeModule", "toastr"]);
 
 downGit.config([
-    '$routeProvider',
-    
-    function($routeProvider) {
+    "$routeProvider",
+
+    function ($routeProvider) {
         $routeProvider
-            .when('/', {
-                redirectTo: '/home',
+            .when("/", {
+                redirectTo: "/home",
             })
             .otherwise({
-                redirectTo: '/home',
+                redirectTo: "/home",
             });
-    }
+    },
 ]);
 
 downGit.config([
-    'toastrConfig',
-    
-    function(toastrConfig) {
+    "toastrConfig",
+
+    function (toastrConfig) {
         angular.extend(toastrConfig, {
-            positionClass: 'toast-bottom-right',
+            positionClass: "toast-bottom-right",
             maxOpened: 3,
         });
-    }
+    },
 ]);
